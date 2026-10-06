@@ -1,12 +1,12 @@
 # Dart Exercises: Grade Computation
 
 **Name:** Kylle Paulino
-**Section:** (write your section here)
+**Section:** 3.2 BSIT
 **Course:** NTC_PC16 – Mobile Development w/ Lab, Week 7
 
 ## Scenario
 
-A console program that computes a student's final grade from four quiz scores and one exam score, then checks whether the student passed.
+A console program that computes a student's final grade from five quiz scores and one exam score, then checks whether the student passed.
 
 ## Concepts demonstrated
 
