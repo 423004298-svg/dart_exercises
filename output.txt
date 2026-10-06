@@ -1,12 +1,12 @@
 Student: Kylle Paulino
 Subject: Mobile Development
 Quizzes taken: 5
-Total quiz score: 350.00
-Quiz average: 87.50
+Total quiz score: 430.00
+Quiz average: 86.00
 Exam score: 84.00
-Final grade (40% quizzes + 60% exam): 85.40
-Whole points (~/): 85
-Decimal part (%): 0.40
+Final grade (40% quizzes + 60% exam): 84.80
+Whole points (~/): 84
+Decimal part (%): 0.80
 Passing mark: 75.00
 Passed? true
 Perfect score? false
