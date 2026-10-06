@@ -1,6 +1,6 @@
 Student: Kylle Paulino
 Subject: Mobile Development
-Quizzes taken: 4
+Quizzes taken: 5
 Total quiz score: 350.00
 Quiz average: 87.50
 Exam score: 84.00
