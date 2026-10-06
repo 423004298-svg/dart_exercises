@@ -11,11 +11,12 @@ void main() {
   double quiz2 = 92.0;
   double quiz3 = 79.5;
   double quiz4 = 90.0;
+  double quiz5 = 80.0;
   double examScore = 84.0;
   double passingMark = 75.0;
 
   // ---------- Arithmetic operators ----------
-  double totalQuizScore = quiz1 + quiz2 + quiz3 + quiz4; // +
+  double totalQuizScore = quiz1 + quiz2 + quiz3 + quiz4 + quiz5; // +
   double quizAverage = totalQuizScore / numberOfQuizzes; // /
   double finalGrade = (quizAverage * 0.40) + (examScore * 0.60); // * and +
   int wholePoints = finalGrade ~/ 1; // ~/ keeps the whole number only
