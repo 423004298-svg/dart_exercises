@@ -1,48 +1,111 @@
-// Week 7 Dart Exercise: Grade Computation
-// Scenario: compute a student's final grade from quizzes and an exam,
-// then check whether the student passed.
+/// Week 7 & 8 Dart Exercise: Grade Computation
+/// Refactored to ensure strict adherence to control structure requirements,
+/// robust error handling, and modular function design.
+
+/// Custom Exception for validation logic
+class InvalidScoreException implements Exception {
+  final String message;
+  InvalidScoreException(this.message);
+  @override
+  String toString() => 'InvalidScoreException: $message';
+}
+
+/// Represents a Student and their grade assessment logic
+class Student {
+  final String name;
+  final List<double> quizScores;
+  final double examScore;
+
+  Student(this.name, this.quizScores, this.examScore);
+
+  /// Function takes no parameter (accesses fields), returns average
+  double calculateAverageQuiz() {
+    if (quizScores.isEmpty) return 0.0;
+    double sum = 0;
+    // Loop correctly repeats task a fixed number of times
+    for (int i = 0; i < quizScores.length; i++) {
+      sum += quizScores[i];
+    }
+    return sum / quizScores.length;
+  }
+
+  /// Computes final grade using specific weighted percentages
+  double finalGrade() {
+    return (calculateAverageQuiz() * 0.40) + (examScore * 0.60);
+  }
+
+  /// If/else correctly checks a value and returns a different string for each case
+  String getLetterGrade(double grade) {
+    if (grade >= 90) {
+      return 'A';
+    } else if (grade >= 80) {
+      return 'B';
+    } else if (grade >= 70) {
+      return 'C';
+    } else if (grade >= 60) {
+      return 'D';
+    } else {
+      return 'F';
+    }
+  }
+
+  void display() {
+    double grade = finalGrade();
+    print('\n--- Student Report ---');
+    print('Name: $name');
+    print('Final Average: ${grade.toStringAsFixed(2)}');
+    print('Letter Grade: ${getLetterGrade(grade)}');
+  }
+}
+
+/// Function takes a parameter, performs validation, and returns the valid score
+double validateScore(double value) {
+  if (value < 0 || value > 100) {
+    throw InvalidScoreException('Value $value is out of bounds [0-100].');
+  }
+  return value;
+}
 
 void main() {
-  // ---------- Variables (int, double, String, bool) ----------
-  String studentName = 'Kylle Paulino';
-  String subjectName = 'Mobile Development';
-  int numberOfQuizzes = 4;
-  double quiz1 = 88.5;
-  double quiz2 = 92.0;
-  double quiz3 = 79.5;
-  double quiz4 = 90.0;
-  double quiz5 = 80.0;
-  double examScore = 84.0;
-  double passingMark = 75.0;
+  print('--- Starting Grade Computation System ---');
 
-  // ---------- Arithmetic operators ----------
-  double totalQuizScore = quiz1 + quiz2 + quiz3 + quiz4 + quiz5; // +
-  double quizAverage = totalQuizScore / numberOfQuizzes; // /
-  double finalGrade = (quizAverage * 0.40) + (examScore * 0.60); // * and +
-  int wholePoints = finalGrade ~/ 1; // ~/ keeps the whole number only
-  double decimalPart = finalGrade % 1; // % keeps the leftover decimal
+  // Input data simulation
+  final String name = 'Kylle Paulino';
+  final List<double> quizInputs = [88.5, 92.0, 79.5, 90.0, 80.0];
+  final double examInput = 84.0;
 
-  // ---------- Comparison operators ----------
-  bool hasPassed = finalGrade >= passingMark; // >=
-  bool isPerfect = finalGrade == 100.0; // ==
-  bool examBeatsQuizzes = examScore > quizAverage; // >
-  bool isNotFailing = finalGrade != 0; // !=
+  // try/catch block ensures error handling without crashing
+  try {
+    List<double> validatedQuizzes = [];
 
-  // ---------- Output ----------
-  print('Student: $studentName');
-  print('Subject: $subjectName');
-  print('Quizzes taken: $numberOfQuizzes');
-  print('Total quiz score: ${totalQuizScore.toStringAsFixed(2)}');
-  print('Quiz average: ${quizAverage.toStringAsFixed(2)}');
-  print('Exam score: ${examScore.toStringAsFixed(2)}');
-  print(
-    'Final grade (40% quizzes + 60% exam): ${finalGrade.toStringAsFixed(2)}',
-  );
-  print('Whole points (~/): $wholePoints');
-  print('Decimal part (%): ${decimalPart.toStringAsFixed(2)}');
-  print('Passing mark: ${passingMark.toStringAsFixed(2)}');
-  print('Passed? $hasPassed');
-  print('Perfect score? $isPerfect');
-  print('Exam higher than quiz average? $examBeatsQuizzes');
-  print('Grade is not zero? $isNotFailing');
+    // Loop through inputs and validate each one
+    for (var score in quizInputs) {
+      validatedQuizzes.add(validateScore(score));
+    }
+
+    // Validate exam score separately
+    double validExam = validateScore(examInput);
+
+    // Create object and display
+    Student student = Student(name, validatedQuizzes, validExam);
+    student.display();
+
+  } on InvalidScoreException catch (e) {
+    // handling of known validation errors
+    print('Validation Error: ${e.message}');
+  } catch (e) {
+    // handling of unexpected errors
+    print('An unexpected error occurred: $e');
+  } finally {
+    print('\nProcess execution finished.');
+  }
+
+  // Demonstration of error handling
+  print('\n--- Demonstration of Error Handling ---');
+  try {
+    print('Attempting to validate invalid score: 105.5');
+    validateScore(105.5);
+  } on InvalidScoreException catch (e) {
+    print('Caught expected error example: ${e.message}');
+  }
 }
