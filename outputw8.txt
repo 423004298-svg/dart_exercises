@@ -1,0 +1,12 @@
+--- Starting Grade Computation System ---
+
+--- Student Report ---
+Name: Kylle Paulino
+Final Average: 84.80
+Letter Grade: B
+
+Process execution finished.
+
+--- Demonstration of Error Handling ---
+Attempting to validate invalid score: 105.5
+Caught expected error example: Value 105.5 is out of bounds [0-100].
