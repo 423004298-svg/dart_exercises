@@ -1,0 +1,7 @@
+name: classquest_oop
+description: Week 9 Dart OOP activity - classes, constructors, encapsulation, Lists and Maps (ClassQuest study task tracker).
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.0.0
