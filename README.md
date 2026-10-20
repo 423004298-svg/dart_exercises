@@ -1,41 +1,44 @@
-# Dart Exercises: Grade Computation
+# ClassQuest OOP (Dart console program)
 
-**Name:** Kylle Paulino
-**Section:** 3.2 BSIT
-**Course:** NTC_PC16 – Mobile Development w/ Lab, Week 7
+PC16 Mobile Development with Lab - Week 9: Object-Oriented Programming in Dart (Part 1).
 
-## Scenario
+A small console program that models the study tasks from the ClassQuest app (a gamified study habit and deadline tracker).
 
-A console program that computes a student's final grade from five quiz scores and one exam score, then checks whether the student passed.
+## What it demonstrates (rubric checklist)
 
-## Concepts demonstrated
+| Requirement | Where |
+| --- | --- |
+| Class with fields and methods | `StudyTask` in `lib/study_task.dart` (fields: `title`, `subject`, `dueDate`; methods: `daysLeft`, `complete`, `reschedule`, `statusLabel`) |
+| Constructor that sets initial values | `StudyTask(this.title, this.subject, this.dueDate)` with `_isDone = false`, `_pointsEarned = 0` |
+| Encapsulation (private field) | `_isDone` and `_pointsEarned`, read through getters `isDone` / `pointsEarned`, changed only by `complete()` |
+| List or Map | `StudyPlanner` keeps a `List<StudyTask>` and `groupBySubject()` returns a `Map<String, List<StudyTask>>` |
+| Objects created and tested in `main()` | `bin/main.dart` creates four tasks, calls their methods, prints results |
 
-- **Variables:** `String`, `int`, `double`, `bool`
-- **Arithmetic operators:** `+`, `/`, `*`, `~/`, `%`
-- **Comparison operators:** `>=`, `==`, `>`, `!=`
-- **Output:** `print()` with string interpolation
+## Run it
 
-## How to run
+Requires the Dart SDK (or Flutter, which includes it).
 
 ```
 dart run
 ```
 
-## Sample output
+Or run `bin/main.dart` from your IDE.
+
+## Project structure
 
 ```
-Student: Kylle Paulino
-Subject: Mobile Development
-Quizzes taken: 4
-Total quiz score: 350.00
-Quiz average: 87.50
-Exam score: 84.00
-Final grade (40% quizzes + 60% exam): 85.40
-Whole points (~/): 85
-Decimal part (%): 0.40
-Passing mark: 75.00
-Passed? true
-Perfect score? false
-Exam higher than quiz average? false
-Grade is not zero? true
+bin/main.dart            # entry point: creates objects and prints results
+lib/study_task.dart      # StudyTask class (private fields, constructor, methods)
+lib/study_planner.dart   # StudyPlanner class (List + Map)
+pubspec.yaml
 ```
+
+## Reflective exit ticket (write this in your own words)
+
+Private field I chose: `_isDone` (and `_pointsEarned`).
+
+Why: if any code could set `_isDone = true` directly, a task could be "finished" without going through `complete()`, which is the only place that checks for double completion and awards the right points. Keeping it private means the rules live in one place.
+
+## Next week (Week 10)
+
+`StudyTask` is the base class to extend with inheritance and polymorphism (for example `Quiz`, `Project`, `Exam` subclasses overriding how points are earned).
