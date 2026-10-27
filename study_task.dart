@@ -16,15 +16,18 @@ class StudyTask {
   // task could be marked done (or given points) without following the rules.
   bool _isDone;
   int _pointsEarned;
+  bool _isSaved; // Week 11: set only after the async save finishes
 
   /// Constructor: sets the initial values when a new task is created.
   StudyTask(this.title, this.subject, this.dueDate)
       : _isDone = false,
-        _pointsEarned = 0;
+        _pointsEarned = 0,
+        _isSaved = false;
 
   // Read-only access to the private fields.
   bool get isDone => _isDone;
   int get pointsEarned => _pointsEarned;
+  bool get isSaved => _isSaved;
 
   /// Whole days from [today] until the due date (negative = overdue).
   int daysLeft(DateTime today) {
@@ -49,6 +52,17 @@ class StudyTask {
     if (_isDone) return false;
     dueDate = newDueDate;
     return true;
+  }
+
+  /// Week 11 - async method.
+  ///
+  /// Simulates saving this task to a server. Returns a Future<String>: the
+  /// caller gets a "promise" right away and the confirmation message arrives
+  /// after the 2-second delay, without freezing the rest of the program.
+  Future<String> saveToServer() async {
+    await Future.delayed(const Duration(seconds: 2)); // simulated network time
+    _isSaved = true;
+    return 'Saved "$title" ($subject) to the server';
   }
 
   /// Short human-readable status, e.g. "due in 2 days" or "done (+10 pts)".
