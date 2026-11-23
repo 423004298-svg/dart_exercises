@@ -1,67 +1,59 @@
-# ClassQuest OOP (Dart console program)
+# ClassQuest - Week 14 Static UI (Flutter)
 
-> Week 9 base program + Week 11 async addition (see the Week 11 section below).
+PC16 Mobile Development with Lab - Week 14: Flutter Foundations & Static UI (Part 2).
 
-PC16 Mobile Development with Lab - Week 9: Object-Oriented Programming in Dart (Part 1).
+Two static, non-interactive screens for ClassQuest, a gamified study habit and deadline tracker for Senior High School STEM students.
 
-A small console program that models the study tasks from the ClassQuest app (a gamified study habit and deadline tracker).
+| Screen | File | What it shows |
+| --- | --- | --- |
+| Screen 1 - Welcome / Log in | `lib/screens/welcome_screen.dart` | Hero banner (Stack), feature list, login form drawn with Containers, Log in button |
+| Screen 2 - Dashboard | `lib/screens/dashboard_screen.dart` | Avatar with level badge (Stack), stat cards, progress ring, upcoming tasks, study time bars |
 
-## What it demonstrates (rubric checklist)
+Both are `StatelessWidget` classes that share one `ThemeData` (`lib/theme.dart`) for colors, typography and a spacing scale. There is no navigation, validation or state; values are sample data.
 
-| Requirement | Where |
-| --- | --- |
-| Class with fields and methods | `StudyTask` in `lib/study_task.dart` (fields: `title`, `subject`, `dueDate`; methods: `daysLeft`, `complete`, `reschedule`, `statusLabel`) |
-| Constructor that sets initial values | `StudyTask(this.title, this.subject, this.dueDate)` with `_isDone = false`, `_pointsEarned = 0` |
-| Encapsulation (private field) | `_isDone` and `_pointsEarned`, read through getters `isDone` / `pointsEarned`, changed only by `complete()` |
-| List or Map | `StudyPlanner` keeps a `List<StudyTask>` and `groupBySubject()` returns a `Map<String, List<StudyTask>>` |
-| Objects created and tested in `main()` | `bin/main.dart` creates four tasks, calls their methods, prints results |
+## Requirements checklist
 
-## Run it
+- `MaterialApp` + shared `ThemeData`: `lib/main.dart`, `lib/theme.dart`
+- `Scaffold`, `Column`, `Row`, `Container`, `Text`, `Icon`: both screens
+- `Stack` + `Positioned`: hero banner on Screen 1 (image, gradient, streak badge, title) and avatar level badge + progress ring on Screen 2
+- Local image assets: `assets/images/classquest_banner.png` and `assets/images/avatar.png`, registered in `pubspec.yaml` and shown with `Image.asset` (width, height, `BoxFit.cover`)
+- Spacing and sizing: `Padding`, `SizedBox`, `Spacer`, `Expanded`; scrollable body to avoid overflow on small phones
 
-Requires the Dart SDK (or Flutter, which includes it).
+## Set up (one time)
 
-```
-dart run
-```
+This repo contains `lib/`, `assets/`, `test/` and `pubspec.yaml`. Generate the platform folders (android/, ios/, ...) on your machine:
 
-Or run `bin/main.dart` from your IDE.
-
-## Project structure
-
-```
-bin/main.dart            # entry point: creates objects and prints results
-lib/study_task.dart      # StudyTask class (private fields, constructor, methods)
-lib/study_planner.dart   # StudyPlanner class (List + Map)
-pubspec.yaml
+```bash
+flutter create .
+flutter pub get
 ```
 
-## Reflective exit ticket (write this in your own words)
+If `flutter create .` replaces `lib/main.dart` or `test/widget_test.dart` with the default counter app, restore ours from this repository (`git checkout -- lib/main.dart test/widget_test.dart` if you have already committed them).
 
-Private field I chose: `_isDone` (and `_pointsEarned`).
+## Preview each screen (no navigation code)
 
-Why: if any code could set `_isDone = true` directly, a task could be "finished" without going through `complete()`, which is the only place that checks for double completion and awards the right points. Keeping it private means the rules live in one place.
+The initial screen is chosen at launch with a `--dart-define`:
 
-## Next week (Week 10)
+```bash
+flutter run                          # Screen 1 - Welcome
+flutter run --dart-define=SCREEN=2   # Screen 2 - Dashboard
+```
 
-`StudyTask` is the base class to extend with inheritance and polymorphism (for example `Quiz`, `Project`, `Exam` subclasses overriding how points are earned).
+In VS Code you can instead edit the `home:` line in `lib/main.dart` temporarily.
 
-## Week 11 - Async behavior
+## Verify
 
-Added to `StudyTask` (`lib/study_task.dart`):
+```bash
+flutter analyze
+flutter test
+```
 
-- `Future<String> saveToServer()` - simulates saving the task. It waits 2 seconds with `Future.delayed`, then marks the private field `_isSaved` as true and returns a confirmation message.
-- `bool get isSaved` - read-only getter for the new private field.
+Take one screenshot per screen from the emulator/phone and name them `Screen_1.png` and `Screen_2.png`.
 
-`main()` in `bin/main.dart` is now `Future<void> main() async` and:
+## Submission checklist (Google Classroom, items uploaded separately, no ZIP)
 
-1. Prints "Saving ..." immediately, then `await`s `saveToServer()` and prints the result only after it is ready.
-2. Starts a second save without awaiting it, prints other messages while it is still running (proof it is non-blocking), then awaits it.
-
-Expected print order: the "Saving..." line appears first, about 2 seconds pass, then the "Saved ..." line. Run `dart run` at least twice and confirm the order and delay are the same each time.
-
-### Be ready to explain (Week 12 oral defense)
-
-- Why `Future<String>`: the result is not available immediately, so the method returns a promise of a String.
-- Why `async` on the method and `await` in main: `await` pauses only this function until the Future completes, while the program is still free to run other code (shown by the second save).
-- Why `Future.delayed`: it stands in for real network or disk time.
-- Why `_isSaved` is private: only the save method should be able to mark a task as saved.
+- [ ] GitHub repository link (this project; do not commit `build/`)
+- [ ] `Screen_1.png`, `Screen_2.png`
+- [ ] `Widget_Tree.pdf` (a draft is included in this package; add your name and section)
+- [ ] Figma link or screenshot of your two original design screens
+- [ ] Files named `LastName_FirstName_Week14` where applicable

@@ -1,7 +1,22 @@
-name: classquest_oop
-description: Week 9 Dart OOP activity - classes, constructors, encapsulation, Lists and Maps (ClassQuest study task tracker).
-version: 1.0.0
-publish_to: none
+name: classquest_week14
+description: ClassQuest - Week 14 static UI (two screens) for PC16 Mobile Development with Lab.
+publish_to: 'none'
+version: 1.0.0+1
 
 environment:
-  sdk: ^3.0.0
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/classquest_banner.png
+    - assets/images/avatar.png
